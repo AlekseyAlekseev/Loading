@@ -29,6 +29,10 @@ public class Main {
         GameProgress.openZip("C://JAVA//Installation//Games//savegames//", "save2.zip");
         GameProgress.openZip("C://JAVA//Installation//Games//savegames//", "save3.zip");
 
+        GameProgress.openProgress("C://JAVA//Installation//Games//savegames//save1.dat");
+        GameProgress.openProgress("C://JAVA//Installation//Games//savegames//save2.dat");
+        GameProgress.openProgress("C://JAVA//Installation//Games//savegames//save3.dat");
+
 
     }
 }

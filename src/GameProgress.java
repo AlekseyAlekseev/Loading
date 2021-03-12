@@ -28,12 +28,11 @@ public class GameProgress implements Serializable {
 
     @Override
     public String toString() {
-        return "GameProgress{" +
+        return "GameProgress: " +
                 "health=" + health +
                 ", weapons=" + weapons +
                 ", lvl=" + lvl +
-                ", distance=" + distance +
-                '}';
+                ", distance=" + distance;
     }
 
     public static void saveGame(String savePath, GameProgress gameProgress) {
@@ -50,14 +49,8 @@ public class GameProgress implements Serializable {
         try (ZipOutputStream zout = new ZipOutputStream(new
                 FileOutputStream(zipPath));
              FileInputStream fis = new FileInputStream(filePath)) {
-//            try (Stream<Path> paths = Files.walk(Paths.get(filePath))) {
-//                paths
-//                        .filter(Files::isRegularFile)
-//                        .forEach(System.out::println);
-//            } catch (IOException e) {
-//                System.out.println(e.getMessage());
-//            }
-            ZipEntry entry = new ZipEntry("packed_save.dat");
+            String name = fileSave.getName();
+            ZipEntry entry = new ZipEntry(name);
             zout.putNextEntry(entry);
             // считываем содержимое файла в массив byte
             byte[] buffer = new byte[fis.available()];
@@ -94,13 +87,17 @@ public class GameProgress implements Serializable {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-//        try (FileInputStream fis = new FileInputStream(filePath);
-//        ObjectInputStream ois = new ObjectInputStream(fis)) {
-//            gameProgress = (GameProgress) ois.readObject();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        System.out.println(gameProgress);
+    }
+
+    public static void openProgress(String filePath) {
+        GameProgress gameProgress = null;
+        try (FileInputStream fis = new FileInputStream(filePath);
+        ObjectInputStream ois = new ObjectInputStream(fis)) {
+            gameProgress = (GameProgress) ois.readObject();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(gameProgress);
     }
 }
 
